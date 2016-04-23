@@ -15,17 +15,22 @@ class Bar : UITableViewCell {}
 class UITableViewCellTests: XCTestCase, UITableViewDataSource {
     
     func testIdentifier() {
-        XCTAssertEqual(Foo.identifier, "Foo")
+        XCTAssertEqual(Foo.className, "Foo")
     }
     
     func testDequeue() {
         let tv = UITableView()
         tv.dataSource = self
         Foo.register(tableView: tv)
-        let cell = Foo.dequeue(tableView: tv, forIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+        Bar.register(tableView: tv)
         
-        XCTAssertTrue(cell is Foo)
-        XCTAssertEqual(cell.tableView, tv)
+        let foo = Foo.dequeue(tableView: tv, forIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+        XCTAssertTrue(foo.dynamicType == Foo.self)
+        XCTAssertEqual(foo.tableView, tv)
+        
+        let bar = Bar.dequeue(tableView: tv, forIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+        XCTAssertTrue(bar.dynamicType == Bar.self)
+        XCTAssertEqual(bar.tableView, tv)
     }
     
     // MARK: - UITableViewDataSource
