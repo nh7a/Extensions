@@ -18,7 +18,7 @@ extension UIColor {
     
     convenience init(rgba: UInt) {
         let rgb = rgba >> 8
-        let a = CGFloat((rgb >> 0) & 0xff) / 0xff
+        let a = CGFloat(rgba & 0xff) / 0xff
         self.init(rgb: rgb, alpha: a)
     }
 }
