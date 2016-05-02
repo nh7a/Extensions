@@ -26,10 +26,8 @@ extension NSData {
     }
     
     var hexString: String {
-        var string = String()
-        for i in UnsafeBufferPointer<UInt8>(start: UnsafeMutablePointer<UInt8>(bytes), count: length) {
-            string += String(format:"%02x", i)
+        return UnsafeBufferPointer<UInt8>(start: UnsafeMutablePointer<UInt8>(bytes), count: length).reduce("") {
+            return $0 + String(format:"%02x", $1)
         }
-        return string
     }
 }
